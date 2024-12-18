@@ -62,6 +62,11 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, UnfollowEvent> unfollowListener() {
+        return kafkaListenerContainerFactory(UnfollowEvent.class);
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, FeedCommentCreateEvent> feedCommentCreateListener() {
         return kafkaListenerContainerFactory(FeedCommentCreateEvent.class);
     }
@@ -69,6 +74,16 @@ public class KafkaConsumerConfig {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, ShortsCommentCreateEvent> shortsCommentCreateListener() {
         return kafkaListenerContainerFactory(ShortsCommentCreateEvent.class);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, FeedCommentDeleteEvent> feedCommentDeleteListener() {
+        return kafkaListenerContainerFactory(FeedCommentDeleteEvent.class);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, ShortsCommentDeleteEvent> shortsCommentDeleteListener() {
+        return kafkaListenerContainerFactory(ShortsCommentDeleteEvent.class);
     }
 
 

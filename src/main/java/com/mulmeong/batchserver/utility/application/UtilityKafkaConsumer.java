@@ -34,6 +34,13 @@ public class UtilityKafkaConsumer {
         followService.createFollowerRenew(message);
     }
 
+    @KafkaListener(topics = "${event.utility.pub.topics.unfollow.name}",
+            containerFactory = "unfollowListener")
+    public void unfollowed(UnfollowEvent message) {
+        log.info("unfollow message: {}", message.getTargetUuid());
+        followService.createFollowerRenew(message);
+    }
+
     @KafkaListener(topics = "${event.feed.pub.topics.feed-create.name}",
             containerFactory = "feedCreateListener")
     public void feedCreated(FeedCreateEvent message) {
@@ -115,6 +122,18 @@ public class UtilityKafkaConsumer {
             containerFactory = "shortsCommentCreateListener")
     public void shortsCommentCreated(ShortsCommentCreateEvent message) {
         log.info("shorts comment create message: {}", message.getShortsUuid());
+        shortsService.shortsCommentCountRenew(message);
+    }
+
+    @KafkaListener(topics = "${event.comment.pub.topics.feed-comment-delete.name}",
+            containerFactory = "feedCommentDeleteListener")
+    public void shortsCommentCreated(FeedCommentDeleteEvent message) {
+        feedService.feedCommentCountRenew(message);
+    }
+
+    @KafkaListener(topics = "${event.comment.pub.topics.shorts-comment-delete.name}",
+            containerFactory = "shortsCommentDeleteListener")
+    public void shortsCommentDeleted(ShortsCommentDeleteEvent message) {
         shortsService.shortsCommentCountRenew(message);
     }
 
